@@ -8,7 +8,7 @@
 
 - **Backend:** .NET 7 Web API
 - **Frontend:** Vue.js 3
-- **Base de datos:** MYSQL
+- **Base de datos:** MySQL
 
 ---
 
