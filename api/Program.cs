@@ -4,8 +4,20 @@ using Microsoft.EntityFrameworkCore; // para UseMySql()
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// vamos a corsear
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowVueApp", policy =>{
+        policy.WithOrigins("http://localhost:5173")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
+
+
+// Add services to the container.
 builder.Services.AddControllers();
 
 
@@ -13,7 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 4, 3)) // ajustá según la versión de tu MySQL
+        new MySqlServerVersion(new Version(8, 4, 3)) // version di mii mysql
     )
 );
 
@@ -34,6 +46,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// uisar cors
+
+app.UseCors("AllowVueApp");
 
 app.MapControllers();
 
